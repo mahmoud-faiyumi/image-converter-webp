@@ -321,12 +321,21 @@ def format_file_size(size_bytes: int) -> str:
     """Convert bytes to human readable format."""
     if size_bytes == 0:
         return "0 B"
+    
+    # Handle negative values (space used instead of saved)
+    is_negative = size_bytes < 0
+    abs_size = abs(size_bytes)
+    
     size_names = ["B", "KB", "MB", "GB", "TB"]
     i = 0
-    while size_bytes >= 1024 and i < len(size_names) - 1:
-        size_bytes /= 1024.0
+    while abs_size >= 1024 and i < len(size_names) - 1:
+        abs_size /= 1024.0
         i += 1
-    return f"{size_bytes:.1f} {size_names[i]}"
+    
+    if is_negative:
+        return f"-{abs_size:.1f} {size_names[i]}"
+    else:
+        return f"{abs_size:.1f} {size_names[i]}"
 
 # Main entry point
 def main():
@@ -438,12 +447,16 @@ def main():
     logging.info(f"WebP total size: {format_file_size(total_webp_size)}")
     logging.info(f"Thumbnails total size: {format_file_size(total_thumb_size)}")
     logging.info(f"Output total size: {format_file_size(total_output_size)}")
-    logging.info(f"Space saved: {format_file_size(space_saved)}")
-    logging.info(f"Overall compression ratio: {overall_compression_ratio:.1f}%")
-    
     if space_saved > 0:
+        logging.info(f"Space saved: {format_file_size(space_saved)}")
         savings_percent = (space_saved / total_original_size) * 100
         logging.info(f"Space savings: {savings_percent:.1f}%")
+    else:
+        logging.info(f"Space used: {format_file_size(abs(space_saved))}")
+        usage_percent = (abs(space_saved) / total_original_size) * 100
+        logging.info(f"Space increase: {usage_percent:.1f}%")
+    
+    logging.info(f"Overall compression ratio: {overall_compression_ratio:.1f}%")
     
     # write failed list if any
     if failed:

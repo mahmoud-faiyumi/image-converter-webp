@@ -1,15 +1,16 @@
 {
-  "input_folder": "imgs/Wallpaper", // Path to folder containing images to convert (JPG, PNG, GIF, BMP, TIFF)
-  "output_webp_folder": "imgs/Wallpaper/webp",  // Path where converted WebP files will be saved
-  "quality": 100,// WebP quality (1-100, higher = better quality but larger files)
-  "method": 6,// WebP compression method (0-6, higher = better compression but slower)
-  "thumb_size": [400, 400],// Thumbnail dimensions [width, height] in pixels
-  "max_workers": 4,  // Number of parallel worker processes (adjust based on CPU cores)
-  "preserve_exif": true,// Keep EXIF metadata (camera info, GPS, etc.) in converted images
-  "preserve_icc": true,// Keep ICC color profiles for accurate color reproduction
-  "preserve_alpha": true, // Keep transparency/alpha channels in images
-  "force_lossless_for_alpha": true,  // Use lossless compression for images with transparency (larger files but perfect quality)
-  "skip_existing": true,  // Skip files that already exist and are up-to-date (faster re-runs)
-  "log_file": "convert_images.log",  // Log file name for conversion progress and errors
-  "failed_list_file": "failed_files.txt"  // File to list any images that failed to convert
+  "input_folder": "imgs/Wallpaper",
+  "output_webp_folder": "imgs/Wallpaper/webp",
+  "output_thumb_folder": "imgs/Wallpaper/webp_thumbs",
+  "quality": 100,
+  "method": 6,
+  "thumb_size": [400, 400],
+  "max_workers": 8,
+  "preserve_exif": true,
+  "preserve_icc": true,
+  "preserve_alpha": true,
+  "force_lossless_for_alpha": true,
+  "skip_existing": true,
+  "log_file": "convert_images.log",
+  "failed_list_file": "failed_files.txt"
 }
